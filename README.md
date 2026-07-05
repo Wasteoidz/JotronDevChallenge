@@ -12,7 +12,8 @@ A minimal .NET 10 certificate upload and download app.
 ## Run locally
 
 ```bash
-cd JotronCertificateApp
+git clone https://github.com/Wasteoidz/JotronDevChallenge.git
+cd JotronDevChallenge
 dotnet restore
 dotnet run
 ```
