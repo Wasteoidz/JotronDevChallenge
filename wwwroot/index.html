@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="no">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,17 +44,17 @@
 </head>
 <body>
 <div class="container">
-    <h2>Jotron Sertifikatadministrasjon</h2>
+    <h2>Jotron Certificate Management</h2>
 
     <form id="uploadForm" enctype="multipart/form-data">
-        <h3>Last opp nytt sertifikat</h3>
+        <h3>Upload a new certificate</h3>
         <div class="form-grid">
             <div class="form-group">
-                <label for="certNo">Sertifikatnummer</label>
+                <label for="certNo">Certificate number</label>
                 <input type="text" id="certNo" name="CertificateNumber" required>
             </div>
             <div class="form-group">
-                <label for="certType">Sertifiseringstype</label>
+                <label for="certType">Certification type</label>
                 <select id="certType" name="CertificateType" required>
                     <option value="Declaration of conformity">Declaration of conformity</option>
                     <option value="Green passport">Green passport</option>
@@ -67,52 +67,52 @@
                 <input type="text" id="notifiedBody" name="NotifiedBody" required>
             </div>
             <div class="form-group">
-                <label for="issueDate">Utstedelsesdato</label>
+                <label for="issueDate">Issue date</label>
                 <input type="date" id="issueDate" name="DateOfIssue" required>
             </div>
             <div class="form-group">
-                <label for="expDate">Utløpsdato</label>
+                <label for="expDate">Expiry date</label>
                 <input type="date" id="expDate" name="ExpiryDate" required>
             </div>
             <div class="form-group">
-                <label for="rev">Revisjon</label>
-                <input type="text" id="rev" name="Rev" placeholder="f.eks. 01" required>
+                <label for="rev">Revision</label>
+                <input type="text" id="rev" name="Rev" placeholder="e.g. 01" required>
             </div>
             <div class="form-group">
-                <label for="revDate">Revisjonsdato</label>
+                <label for="revDate">Revision date</label>
                 <input type="date" id="revDate" name="RevisionIssueDate" required>
             </div>
             <div class="form-group">
-                <label for="reason">Årsak</label>
+                <label for="reason">Reason</label>
                 <input type="text" id="reason" name="Reason" required>
             </div>
             <div class="form-group">
-                <label for="author">Forfatter</label>
+                <label for="author">Author</label>
                 <input type="text" id="author" name="Author" required>
             </div>
             <div class="form-group">
-                <label for="approval">Godkjenner</label>
+                <label for="approval">Approver</label>
                 <input type="text" id="approval" name="Approval" required>
             </div>
             <div class="form-group" style="grid-column: span 2;">
-                <label for="file">Sertifikatfil (PDF eller bilde)</label>
+                <label for="file">Certificate file (PDF or image)</label>
                 <input type="file" id="file" name="File" required>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Last opp sertifikat</button>
+        <button type="submit" class="btn btn-primary">Upload certificate</button>
     </form>
 
     <div class="filters">
-        <h3>Søk og filtrering</h3>
+        <h3>Search and filtering</h3>
         <div class="form-grid">
             <div class="form-group">
-                <label for="searchNumber">Søk på sertifikatnummer</label>
-                <input type="text" id="searchNumber" placeholder="Skriv nummer...">
+                <label for="searchNumber">Search by certificate number</label>
+                <input type="text" id="searchNumber" placeholder="Enter a number...">
             </div>
             <div class="form-group">
-                <label for="filterType">Filtrer på type</label>
+                <label for="filterType">Filter by type</label>
                 <select id="filterType">
-                    <option value="">Alle typer</option>
+                    <option value="">All types</option>
                     <option value="Declaration of conformity">Declaration of conformity</option>
                     <option value="Green passport">Green passport</option>
                     <option value="Type approval">Type approval</option>
@@ -120,21 +120,21 @@
                 </select>
             </div>
         </div>
-        <button onclick="loadCertificates()" class="btn btn-secondary" style="margin-top: 10px;">Anvend filtre</button>
+        <button onclick="loadCertificates()" class="btn btn-secondary" style="margin-top: 10px;">Apply filters</button>
     </div>
 
-    <h3>Registrerte sertifikater</h3>
+    <h3>Registered certificates</h3>
     <div class="table-responsive">
         <table id="certTable">
             <thead>
                 <tr>
-                    <th>Nummer</th>
+                    <th>Number</th>
                     <th>Type</th>
                     <th>Notified Body</th>
-                    <th>Utstedt</th>
-                    <th>Utløper</th>
-                    <th>Siste Rev</th>
-                    <th>Handling</th>
+                    <th>Issued</th>
+                    <th>Expires</th>
+                    <th>Latest revision</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody id="certTableBody"></tbody>
@@ -152,15 +152,15 @@
         try {
             const response = await fetch('/certificates', { method: 'POST', body: formData });
             if (response.ok) {
-                alert('Sertifikat ble lastet opp suksessfullt.');
+                alert('Certificate uploaded successfully.');
                 e.target.reset();
                 await loadCertificates();
             } else {
                 const err = await response.json();
-                alert('Valideringsfeil:\n' + JSON.stringify(err.errors || err, null, 2));
+                alert('Validation errors:\n' + JSON.stringify(err.errors || err, null, 2));
             }
         } catch (error) {
-            alert('Kritisk feil ved kommunikasjon med backend.');
+            alert('Critical error while communicating with the backend.');
         }
     });
 
@@ -190,7 +190,7 @@
             tbody.innerHTML = '';
             
             if (certs.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="empty-msg">Ingen sertifikater samsvarer med søkekriteriene.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="empty-msg">No certificates match the current search criteria.</td></tr>`;
                 return;
             }
             
@@ -200,32 +200,32 @@
                     <td>${escapeHtml(c.certificateNumber)}</td>
                     <td>${escapeHtml(c.certificateType)}</td>
                     <td>${escapeHtml(c.notifiedBody)}</td>
-                    <td>${new Date(c.dateOfIssue).toLocaleDateString('no-NO')}</td>
-                    <td>${new Date(c.expiryDate).toLocaleDateString('no-NO')}</td>
+                    <td>${new Date(c.dateOfIssue).toLocaleDateString('en-GB')}</td>
+                    <td>${new Date(c.expiryDate).toLocaleDateString('en-GB')}</td>
                     <td>${escapeHtml(latestRev)}</td>
                     <td class="action-cell">
-                        <a href="/certificates/${c.id}/download" class="btn-link" download>Last ned</a>
-                        <button onclick="deleteCertificate(${c.id})" class="btn btn-danger">Slett</button>
+                        <a href="/certificates/${c.id}/download" class="btn-link" download>Download</a>
+                        <button onclick="deleteCertificate(${c.id})" class="btn btn-danger">Delete</button>
                     </td>
                 </tr>`;
                 tbody.insertAdjacentHTML('beforeend', row);
             });
         } catch (err) {
-            tbody.innerHTML = `<tr><td colspan="7" class="error-msg">Kunne ikke hente sertifikater fra API-et.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="7" class="error-msg">Could not fetch certificates from the API.</td></tr>`;
         }
     }
 
     async function deleteCertificate(id) {
-        if (!confirm('Er du sikker på at du vil slette dette sertifikatet permanent?')) return;
+        if (!confirm('Are you sure you want to permanently delete this certificate?')) return;
         try {
             const response = await fetch(`/certificates/${id}`, { method: 'DELETE' });
             if (response.ok) {
                 await loadCertificates();
             } else {
-                alert('Sletting feilet på serversiden.');
+                alert('Deletion failed on the server side.');
             }
         } catch {
-            alert('Nettverksfeil ved forsøk på sletting.');
+            alert('Network error while attempting to delete.');
         }
     }
 

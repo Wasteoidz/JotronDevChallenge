@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using JotronCertificateApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace JotronCertificateApp.Data;
 

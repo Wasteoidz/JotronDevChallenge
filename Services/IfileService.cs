@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Http;
-
 namespace JotronCertificateApp.Services;
 
 public interface IFileService

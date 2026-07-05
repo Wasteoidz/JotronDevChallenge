@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Http;
-
-namespace JotronCertificateApp.Models;
+namespace JotronCertificateApp.Dtos;
 
 public record CertificateUploadDto
 {

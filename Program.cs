@@ -1,40 +1,36 @@
-using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using FluentValidation;
 using JotronCertificateApp.Data;
+using JotronCertificateApp.Dtos;
 using JotronCertificateApp.Endpoints;
 using JotronCertificateApp.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// 1. Infratstruktur og Datatilgang
-builder.Services.AddDbContext<AppDbContext>(options => 
-    options.UseSqlite(connectionString));
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 
-// 2. Applikasjonstjenester (Dependency Injection)
-builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddScoped<ICertificateService, CertificateService>();
-
-// 3. Valideringslag (Automatisk skanning av assembly)
-builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddValidatorsFromAssemblyContaining<CertificateUploadDto>();
 
 var app = builder.Build();
 
-// 4. Middleware Pipeline
-app.UseDefaultFiles();
-app.UseStaticFiles();
-
-// 5. Miljøbetinget Database Seeding (Isolert runtime-initialisering)
 if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
-    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    
-    // Send inn prosjektrota (Directory.GetCurrentDirectory()) for data, IKKE WebRootPath
-    DbInitializer.Seed(context, Directory.GetCurrentDirectory());
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    DbInitializer.Seed(db, builder.Environment.WebRootPath);
 }
 
-// 6. API Endepunkter (Modularisert ruting)
+app.UseDefaultFiles();
+app.UseStaticFiles();
 app.MapCertificateEndpoints();
 
 app.Run();

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JotronCertificateApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+55276fa1a1d8b6ebfcfa987dcee3cf33c051ab27")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c596690ca26641ace87dfbf888b8cc60b7d0c3ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("JotronCertificateApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JotronCertificateApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

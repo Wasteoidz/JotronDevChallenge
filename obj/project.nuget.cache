@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "REhP6kRSKp0=",
+  "dgSpecHash": "PIs2tCHPazI=",
   "success": true,
   "projectFilePath": "C:\\Users\\rolf9\\JotronCertificateApp\\JotronCertificateApp.csproj",
   "expectedPackageFiles": [
@@ -40,18 +40,5 @@
     "C:\\Users\\rolf9\\.nuget\\packages\\system.composition.runtime\\9.0.0\\system.composition.runtime.9.0.0.nupkg.sha512",
     "C:\\Users\\rolf9\\.nuget\\packages\\system.composition.typedparts\\9.0.0\\system.composition.typedparts.9.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "message": "JotronCertificateApp depends on SQLitePCLRaw.bundle_e_sqlite3 (>= 2.1.13) but SQLitePCLRaw.bundle_e_sqlite3 2.1.13 was not found. SQLitePCLRaw.bundle_e_sqlite3 3.0.0 was resolved instead.",
-      "projectPath": "C:\\Users\\rolf9\\JotronCertificateApp\\JotronCertificateApp.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\Users\\rolf9\\JotronCertificateApp\\JotronCertificateApp.csproj",
-      "libraryId": "SQLitePCLRaw.bundle_e_sqlite3",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    }
-  ]
+  "logs": []
 }

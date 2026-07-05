@@ -73,7 +73,7 @@
             },
             "SQLitePCLRaw.bundle_e_sqlite3": {
               "target": "Package",
-              "version": "[2.1.13, )"
+              "version": "[3.0.0, )"
             }
           },
           "imports": [
