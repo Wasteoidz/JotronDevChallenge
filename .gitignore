@@ -20,6 +20,7 @@ Thumbs.db
 *.db
 *.db-journal
 *.db-wal
+*.db-shm
 wwwroot/mock*.pdf
 
 # Dekker opplastingsmapper både på rotnivå og under wwwroot

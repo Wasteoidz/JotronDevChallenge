@@ -5,11 +5,11 @@ namespace JotronCertificateApp.Data;
 
 public static class DbInitializer
 {
-    public static void Seed(AppDbContext context, string webRootPath)
+    public static void Seed(AppDbContext context, string rootPath)
     {
         context.Database.Migrate();
 
-        string uploadsPath = Path.Combine(webRootPath, "uploads");
+        string uploadsPath = Path.Combine(rootPath, "uploads");
         Directory.CreateDirectory(uploadsPath);
 
         foreach (var fileName in new[] { "mock1.pdf", "mock2.pdf" })

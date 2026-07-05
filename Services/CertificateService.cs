@@ -1,6 +1,6 @@
 using JotronCertificateApp.Data;
-using JotronCertificateApp.Models;
 using JotronCertificateApp.Dtos;
+using JotronCertificateApp.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace JotronCertificateApp.Services;
@@ -8,62 +8,39 @@ namespace JotronCertificateApp.Services;
 public class CertificateService : ICertificateService
 {
     private readonly AppDbContext _context;
+    private readonly IFileService _fileService;
 
-    public CertificateService(AppDbContext context) => _context = context;
+    public CertificateService(AppDbContext context, IFileService fileService)
+    {
+        _context = context;
+        _fileService = fileService;
+    }
 
     public async Task<Certificate> CreateFromDtoAsync(CertificateUploadDto dto, string filePath)
     {
-        using var transaction = await _context.Database.BeginTransactionAsync();
-        try
-        {
-            var cert = new Certificate {
-                CertificateNumber = dto.CertificateNumber,
-                CertificateType = dto.CertificateType,
-                NotifiedBody = dto.NotifiedBody,
-                DateOfIssue = dto.DateOfIssue,
-                ExpiryDate = dto.ExpiryDate,
-                FilePath = filePath
-            };
+        var cert = new Certificate {
+            CertificateNumber = dto.CertificateNumber,
+            CertificateType = dto.CertificateType,
+            NotifiedBody = dto.NotifiedBody,
+            DateOfIssue = dto.DateOfIssue,
+            ExpiryDate = dto.ExpiryDate,
+            FilePath = filePath
+        };
 
-            var rev = new Revision {
-                Rev = dto.Rev,
-                IssueDate = dto.RevisionIssueDate,
-                Reason = dto.Reason,
-                Author = dto.Author,
-                Approval = dto.Approval,
-                Certificate = cert
-            };
-
-            _context.Certificates.Add(cert);
-            _context.Revisions.Add(rev);
-            await _context.SaveChangesAsync();
-            await transaction.CommitAsync();
-
-            return cert;
-        }
-        catch
-        {
-            await transaction.RollbackAsync();
-            throw;
-        }
-    }
-
-    public async Task<Revision> AddRevisionFromDtoAsync(int certificateId, RevisionDto dto)
-    {
-        var cert = await _context.Certificates.FindAsync(certificateId) ?? throw new KeyNotFoundException();
-        
         var rev = new Revision {
             Rev = dto.Rev,
-            IssueDate = dto.IssueDate,
+            IssueDate = dto.RevisionIssueDate,
             Reason = dto.Reason,
             Author = dto.Author,
             Approval = dto.Approval,
-            CertificateId = certificateId
+            Certificate = cert
         };
 
+        _context.Certificates.Add(cert);
         _context.Revisions.Add(rev);
         await _context.SaveChangesAsync();
-        return rev;
+
+        return cert;
     }
 
     public async Task<IEnumerable<Certificate>> GetAllAsync(string? number, string? type)
@@ -81,7 +58,23 @@ public class CertificateService : ICertificateService
     {
         var cert = await _context.Certificates.FindAsync(id);
         if (cert == null) return false;
+
+        var filePath = cert.FilePath;
         _context.Certificates.Remove(cert);
-        return await _context.SaveChangesAsync() > 0;
+        var deleted = await _context.SaveChangesAsync() > 0;
+
+        if (deleted && !string.IsNullOrWhiteSpace(filePath))
+        {
+            try
+            {
+                await _fileService.DeleteFileAsync(filePath);
+            }
+            catch
+            {
+                // Ignore cleanup failures; deleting the DB record is primary.
+            }
+        }
+
+        return deleted;
     }
 }

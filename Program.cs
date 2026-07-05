@@ -26,7 +26,7 @@ if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    DbInitializer.Seed(db, builder.Environment.WebRootPath);
+    DbInitializer.Seed(db, builder.Environment.ContentRootPath);
 }
 
 app.UseDefaultFiles();
