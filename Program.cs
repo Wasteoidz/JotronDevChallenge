@@ -5,10 +5,11 @@ using JotronCertificateApp.Endpoints;
 using JotronCertificateApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // 1. Infratstruktur og Datatilgang
 builder.Services.AddDbContext<AppDbContext>(options => 
-    options.UseSqlite("Data Source=certificates.db"));
+    options.UseSqlite(connectionString));
 
 // 2. Applikasjonstjenester (Dependency Injection)
 builder.Services.AddScoped<IFileService, FileService>();

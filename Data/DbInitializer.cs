@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using JotronCertificateApp.Models;
 
 namespace JotronCertificateApp.Data;
@@ -6,7 +7,7 @@ public static class DbInitializer
 {
     public static void Seed(AppDbContext context, string webRootPath)
     {
-        context.Database.EnsureCreated();
+        context.Database.Migrate();
 
         if (context.Certificates.Any()) return;
 

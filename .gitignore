@@ -21,4 +21,4 @@ bld/
 *.db-journal
 *.db-wal
 wwwroot/mock*.pdf
-wwwroot/uploads/
+uploads/
