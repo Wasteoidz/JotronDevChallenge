@@ -155,3 +155,4 @@ C:\Users\rolf9\JotronCertificateApp\bin\Debug\net10.0\FluentValidation.AspNetCor
 C:\Users\rolf9\JotronCertificateApp\bin\Debug\net10.0\FluentValidation.DependencyInjectionExtensions.dll
 C:\Users\rolf9\JotronCertificateApp\obj\Debug\net10.0\JotronCertificateApp.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\rolf9\JotronCertificateApp\obj\Debug\net10.0\compressed\iisq2psvms-{0}-b4n14nlbtp-b4n14nlbtp.gz
+C:\Users\rolf9\JotronCertificateApp\obj\Debug\net10.0\JotronCertificateApp.sourcelink.json

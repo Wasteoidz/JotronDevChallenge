@@ -87,11 +87,13 @@ namespace JotronCertificateApp.Migrations
 
             modelBuilder.Entity("JotronCertificateApp.Models.Revision", b =>
                 {
-                    b.HasOne("JotronCertificateApp.Models.Certificate", null)
+                    b.HasOne("JotronCertificateApp.Models.Certificate", "Certificate")
                         .WithMany("Revisions")
                         .HasForeignKey("CertificateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Certificate");
                 });
 
             modelBuilder.Entity("JotronCertificateApp.Models.Certificate", b =>

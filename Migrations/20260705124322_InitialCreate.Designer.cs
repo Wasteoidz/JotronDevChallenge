@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JotronCertificateApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260703172726_InitialWithRevisions")]
-    partial class InitialWithRevisions
+    [Migration("20260705124322_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,11 +90,13 @@ namespace JotronCertificateApp.Migrations
 
             modelBuilder.Entity("JotronCertificateApp.Models.Revision", b =>
                 {
-                    b.HasOne("JotronCertificateApp.Models.Certificate", null)
+                    b.HasOne("JotronCertificateApp.Models.Certificate", "Certificate")
                         .WithMany("Revisions")
                         .HasForeignKey("CertificateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Certificate");
                 });
 
             modelBuilder.Entity("JotronCertificateApp.Models.Certificate", b =>

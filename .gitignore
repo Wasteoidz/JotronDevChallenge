@@ -1,24 +1,27 @@
-# .NET Core artifacts
-[Dd]ebug/
-[Rr]elease/
-x64/
-x86/
-bld/
-[Bb]in/
-[Oo]bj/
-[Pp]ublish/
+# .NET Core Build Artifacts
+bin/
+obj/
+publish/
 
-# Visual Studio / Rider støy
+# Visual Studio / Rider / VS Code støy
 .vs/
 .idea/
+.vscode/
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
 
-# Applikasjonsspesifikke lokaldata (Kritisk)
+# OS-spesifikk støy
+.DS_Store
+Thumbs.db
+
+# Applikasjonsspesifikke lokaldata
 *.db
 *.db-journal
 *.db-wal
 wwwroot/mock*.pdf
+
+# Dekker opplastingsmapper både på rotnivå og under wwwroot
 uploads/
+wwwroot/uploads/

@@ -29,9 +29,9 @@ if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
     
-    DbInitializer.Seed(context, env.WebRootPath);
+    // Send inn prosjektrota (Directory.GetCurrentDirectory()) for data, IKKE WebRootPath
+    DbInitializer.Seed(context, Directory.GetCurrentDirectory());
 }
 
 // 6. API Endepunkter (Modularisert ruting)
